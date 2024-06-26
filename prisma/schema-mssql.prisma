@@ -1,0 +1,667 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/generated/mssql"
+}
+
+datasource mssql {
+  provider = "sqlserver"
+  url      = env("MSSQL_URL")
+}
+
+model MstHaisoChukei {
+  HaisoChukeiId    Int       @id(map: "PK__MstHaiso__997F0797B6279FA5") @default(autoincrement())
+  HaisoChukeiCd    String    @unique(map: "Unique_MstHaisoChukei") @mssql.NVarChar(4)
+  HaisoChukeiName  String    @mssql.NVarChar(50)
+  UnsoId           Int?
+  IsSogoShukaCheck Boolean
+  Biko             String?   @mssql.NVarChar(50)
+  StatusId         Int?
+  InsertShainId    Int?
+  InsertFormName   String?   @mssql.NVarChar(50)
+  InsertDateTime   DateTime? @mssql.DateTime
+  UpdateShainId    Int?
+  UpdateFormName   String?   @mssql.NVarChar(50)
+  UpdateDateTime   DateTime? @mssql.DateTime
+  MailAddress      String?   @mssql.NVarChar(255)
+  Telephone        String?   @mssql.NVarChar(15)
+  TantoshaSei      String?   @mssql.NVarChar(10)
+  TantoshaMei      String?   @mssql.NVarChar(10)
+  TantoshaSeiKana  String?   @mssql.NVarChar(20)
+  TantoshaMeiKana  String?   @mssql.NVarChar(20)
+}
+
+model MstKojo {
+  KojoId                Int       @id(map: "PK__MstKojo__A1EB9B5AA4D4CC0B") @default(autoincrement())
+  KojoCd                String    @unique(map: "Unique_MstKojo") @mssql.NChar(4)
+  KojoName              String?   @mssql.NVarChar(30)
+  KojoNameKana          String?   @mssql.NVarChar(30)
+  KojoNameRyaku         String?   @mssql.NVarChar(10)
+  YubinNo               String?   @mssql.NVarChar(8)
+  Address1              String?   @mssql.NVarChar(30)
+  Address2              String?   @mssql.NVarChar(30)
+  Telephone             String?   @mssql.NVarChar(15)
+  FaxNo                 String?   @mssql.NVarChar(15)
+  IsKouzo               Boolean?
+  IsHagara              Boolean?
+  IsSakuzu              Boolean?
+  IsSozaiGaichu         Boolean?
+  IsYarikatazaiIraiSaki Boolean?
+  IsJisha               Boolean?
+  IsKogaisha            Boolean?
+  IsChinKako            Boolean?
+  IsTuikazai            Boolean?
+  IsNohinsho            Boolean?
+  TorihikiId            Int?
+  GyosyaId              Int?
+  StatusId              Int?
+  Biko                  String?   @mssql.NVarChar(50)
+  InsertShainId         Int?
+  InsertFormName        String?   @mssql.NVarChar(50)
+  InsertDateTime        DateTime? @mssql.DateTime
+  UpdateShainId         Int?
+  UpdateFormName        String?   @mssql.NVarChar(50)
+  UpdateDateTime        DateTime? @mssql.DateTime
+  IsIDSGohan            Boolean?
+  IsPaper               Boolean?
+  MailAddress           String?   @mssql.VarChar(516)
+  TantoshaSei           String    @default("''", map: "DF__MstKojo__Tantosh__5EBF139D") @mssql.NVarChar(10)
+  TantoshaMei           String    @default("''", map: "DF__MstKojo__Tantosh__5FB337D6") @mssql.NVarChar(10)
+  TantoshaSeiKana       String    @default("''", map: "DF__MstKojo__Tantosh__60A75C0F") @mssql.NVarChar(20)
+  TantoshaMeiKana       String    @default("''", map: "DF__MstKojo__Tantosh__619B8048") @mssql.NVarChar(20)
+  IsLVLNobuchi          Boolean?  @default(false, map: "DF__MstKojo__IsLVLNo__628FA481")
+  IsIdhome              Boolean?
+  IsHajimekensetsu      Boolean?
+}
+
+model MstTorihiki {
+  TorihikiId               Int       @id(map: "PK__MstTorih__B7F70343708E1DB8")
+  TorihikiCd               String?   @unique(map: "Unique_MstTorihiki") @mssql.NVarChar(4)
+  TorihikiName             String?   @mssql.NVarChar(20)
+  TorihikiNameKana         String?   @mssql.NVarChar(20)
+  SeikyuId                 Int?
+  IsSeikyusyoSofuAndMeisai Boolean?
+  IsSeikyusyoOfTempo       Boolean?
+  IsSeikyusyoOfBuken       Boolean?
+  Biko                     String?   @mssql.NVarChar(50)
+  StatusId                 Int?
+  IsBuilder                Boolean?
+  IsPowerBuilder           Boolean?
+  InsertShainId            Int?
+  InsertFormName           String?   @mssql.NVarChar(50)
+  InsertDateTime           DateTime? @mssql.DateTime
+  UpdateShainId            Int?
+  UpdateFormName           String?   @mssql.NVarChar(50)
+  UpdateDateTime           DateTime? @mssql.DateTime
+  IsTyumonUkeoi            Boolean?
+
+  @@index([SeikyuId], map: "IDX_SeikyuId")
+}
+
+
+model MstKantoku {
+  KantokuId      Int       @id(map: "PK__MstKanto__14863A757032EAA9")
+  TorihikiId     String?   @mssql.NVarChar(5)
+  KantokuCd      String?   @mssql.NVarChar(4)
+  KantokuSei     String?   @mssql.NVarChar(10)
+  KantokuMei     String?   @mssql.NVarChar(10)
+  KantokuSeiKana String?   @mssql.NVarChar(20)
+  KantokuMeiKana String?   @mssql.NVarChar(20)
+  Telephone      String?   @mssql.NVarChar(15)
+  Biko           String?   @mssql.NVarChar(200)
+  StatusId       Int?
+  InsertShainId  Int?
+  InsertFormName String?   @mssql.NVarChar(50)
+  InsertDateTime DateTime? @mssql.DateTime
+  UpdateShainId  Int?
+  UpdateFormName String?   @mssql.NVarChar(50)
+  UpdateDateTime DateTime? @mssql.DateTime
+  MailAddress    String?   @mssql.NVarChar(256)
+}
+
+model MstMeisyo {
+  MeisyoId       Int       @id(map: "PK__MstMeisy__66E3C49C1B1E8DCD")
+  BunruiCd       String?   @mssql.NVarChar(4)
+  MeisyoCd       String?   @mssql.NVarChar(3)
+  MeisyoName     String?   @mssql.NVarChar(50)
+  Orderby        Decimal?  @mssql.Decimal(3, 0)
+  Biko           String?   @mssql.NVarChar(100)
+  InsertShainId  Int?
+  InsertFormName String?   @mssql.NVarChar(50)
+  InsertDateTime DateTime? @mssql.DateTime
+  UpdateShainId  Int?
+  UpdateFormName String?   @mssql.NVarChar(50)
+  UpdateDateTime DateTime? @mssql.DateTime
+}
+
+model MstTempo {
+  TempoId         Int       @id(map: "PK__MstTempo__0BA9AC6B13C5B0FD")
+  TorihikiId      Int?
+  TempoCd         String?   @mssql.NVarChar(3)
+  TempoName       String?   @mssql.NVarChar(40)
+  TempoNameKana   String?   @mssql.NVarChar(40)
+  TempoNameRyaku  String?   @mssql.NVarChar(10)
+  HaisoAreaId     Int?
+  YubinNo         String?   @mssql.NVarChar(7)
+  Address         String?   @mssql.NVarChar(40)
+  Telephone       String?   @mssql.NVarChar(15)
+  FaxNo           String?   @mssql.NVarChar(15)
+  Biko            String?   @mssql.NVarChar(100)
+  IsKoujiten      Boolean?
+  IsEigyoten      Boolean?
+  StatusId        Int?
+  InsertShainId   Int?
+  InsertFormName  String?   @mssql.NVarChar(50)
+  InsertDateTime  DateTime? @mssql.DateTime
+  UpdateShainId   Int?
+  UpdateFormName  String?   @mssql.NVarChar(50)
+  UpdateDateTime  DateTime? @mssql.DateTime
+  MailAddress     String?   @mssql.NVarChar(256)
+  TantoshaSei     String?   @mssql.NVarChar(10)
+  TantoshaMei     String?   @mssql.NVarChar(10)
+  TantoshaSeiKana String?   @mssql.NVarChar(20)
+  TantoshaMeiKana String?   @mssql.NVarChar(20)
+}
+
+model TblBukenBasic {
+  BukenBasicId        Int       @id(map: "PK__TblBuken__B5BAD0C2E3B891B1")
+  KoteiDetailId       Int?
+  NobeyukaMenseki1    Decimal?  @mssql.Decimal(5, 2)
+  NobeyukaMenseki2    Decimal?  @mssql.Decimal(5, 2)
+  LowCostId           Int?
+  PastelId            Int?
+  SeinoHyojiId        Int?
+  HModuleId           Int?
+  ModuleNo            Decimal?  @mssql.Decimal(3, 0)
+  MenzaiId            Int?
+  DocumentOutDateTime DateTime? @mssql.DateTime
+  BukenPlanName       String?   @mssql.NVarChar(10)
+  BukenPlanNo         String?   @mssql.NVarChar(100)
+  IsNokiZero          Boolean?
+  ShiyoId             Int?
+  HShiyoId            Int?
+  KeitenId            Int?
+  SozaiHyoId          Int?
+  JShiyoId            Int?
+  TShiyoId            Int?
+  IShiyoId            Int?
+  AShiyoId            Int?
+  SeishinSujikaiId    Int?
+  InsertShainId       Int?
+  InsertFormName      String?   @mssql.NVarChar(50)
+  InsertDateTime      DateTime? @mssql.DateTime
+  UpdateShainId       Int?
+  UpdateFormName      String?   @mssql.NVarChar(50)
+  UpdateDateTime      DateTime? @mssql.DateTime
+  NomonoId            Int?
+  KoubaiNedaId        Int?
+  IDShiyoId           Int?
+  SekouId             Int?
+  OShiyoId            Int?
+  FShiyoId            Int?
+  Remarks             String?   @mssql.NVarChar(100)
+}
+
+model TblKoteiDetail {
+  DetailId            Int       @id(map: "PK__TblKotei__135C316DA3E341F3")
+  HeaderId            Int?
+  StatusId            Int?
+  KoujiNo             String?   @mssql.NVarChar(12)
+  Goutou              String?   @mssql.NVarChar(3)
+  Kouzo               Decimal?  @mssql.Decimal(3, 0)
+  Nendo               Decimal?  @mssql.Decimal(4, 0)
+  BukenNo             String?   @mssql.NVarChar(8)
+  TepraPrintDate      DateTime? @mssql.Date
+  KantokuId           Int?
+  KozoKojoId          Int?
+  HagaraKojoId        Int?
+  SakuzuKojoId        Int?
+  YarikataZaiGaichuId Int?
+  SozaiGaichuId       Int?
+  CadZumenDate        DateTime? @mssql.Date
+  ChakkoDate          DateTime? @mssql.Date
+  KouzoDate1Yotei     String?   @mssql.NVarChar(20)
+  KouzoDate1YoteiOld  String?   @mssql.NVarChar(20)
+  KouzoDate1          DateTime? @mssql.Date
+  KouzoDate2          DateTime? @mssql.Date
+  KouzoDate3          DateTime? @mssql.Date
+  HagaraDate          DateTime? @mssql.Date
+  ShukaKakuninDate    DateTime? @mssql.Date
+  SyoninDate          DateTime? @mssql.Date
+  KouzoKakoYoteiDate  DateTime? @mssql.Date
+  KouzoKakoDate       DateTime? @mssql.Date
+  HagaraKakoYoteiDate DateTime? @mssql.Date
+  HagaraKakoDate      DateTime? @mssql.Date
+  SaishuKakuninDate   DateTime? @mssql.Date
+  Biko                String?   @mssql.NVarChar(400)
+  ShukaJotoYoteiDate  DateTime? @mssql.Date
+  ShukaJotoDate       DateTime? @mssql.Date
+  IsTyumonUkeoi       Boolean?
+  BukenKbnId          Int?
+  InsertShainId       Int?
+  InsertFormName      String?   @mssql.NVarChar(50)
+  InsertDateTime      DateTime? @mssql.DateTime
+  UpdateShainId       Int?
+  UpdateFormName      String?   @mssql.NVarChar(50)
+  UpdateDateTime      DateTime? @mssql.DateTime
+  KohoId              Int?
+  IsSakuzu            Boolean?
+  IsKako              Boolean?
+  IDSGohanKojoId      Int?
+  IsKakuteiKouzoDate1 Boolean?
+  IDSKannoDate        DateTime? @mssql.Date
+  IDSKoteiBiko        String?   @mssql.NVarChar(100)
+  IDSOption           String?   @mssql.NVarChar(40)
+  IsIDSKanamonoHachu  Boolean?
+  IDSBiko             String?   @mssql.NVarChar(40)
+  IDSDannetuzaiHachu  String?   @mssql.NVarChar(20)
+  LVLNobuchiKojoId    Int?
+  Bin1Date            DateTime? @mssql.Date
+  Bin1IsHagara        Boolean?
+  Bin2Date            DateTime? @mssql.Date
+  Bin2IsHagara        Boolean?
+  Bin3Date            DateTime? @mssql.Date
+  Bin3IsHagara        Boolean?
+  Bin4Date            DateTime? @mssql.Date
+  Bin4IsHagara        Boolean?
+  Bin5Date            DateTime? @mssql.Date
+  Bin5IsHagara        Boolean?
+  Bin6Date            DateTime? @mssql.Date
+  Bin6IsHagara        Boolean?
+  IsKanamonoHachu     Boolean?
+  KakoBiko            String?   @mssql.NVarChar(50)
+  BeforeChakkoDate1   DateTime? @mssql.Date
+  BeforeChakkoDate2   DateTime? @mssql.Date
+  IsKabePanel         Boolean?
+  DetailKbnId         Int?
+  KabePanelKojoId     Int?
+}
+
+model TblKoteiHeader {
+  HeaderId         Int       @id(map: "PK__TblKotei__DC3E6923E978EA7A")
+  TorihikiId       Int?
+  GembaName        String?   @mssql.NVarChar(40)
+  GembaNameKana    String?   @mssql.NVarChar(60)
+  Tousu            Decimal?  @mssql.Decimal(3, 0)
+  KoujitenId       Int?
+  SeikyuKoujitenId Int?
+  GembaAddress     String?   @mssql.NVarChar(50)
+  EigyotenId       Int?
+  TodofukenCd      String?   @mssql.NVarChar(2)
+  HaisoAreaId      Int?
+  HachuMotoId      Int?
+  BukenKbn         String?   @mssql.NChar(1)
+  BukenKbnSonohoka String?   @mssql.NVarChar(20)
+  InsertShainId    Int?
+  InsertFormName   String?   @mssql.NVarChar(50)
+  InsertDateTime   DateTime? @mssql.DateTime
+  UpdateShainId    Int?
+  UpdateFormName   String?   @mssql.NVarChar(50)
+  UpdateDateTime   DateTime? @mssql.DateTime
+  IsTyumonUkeoi    Boolean?
+}
+
+model TblShukaGembaHanyu {
+  ShukaGembaHanyuId     Int       @id(map: "PK__TblShuka__231F43D80C79B402")
+  KoteiDetailId         Int?
+  IsKinkyu              Boolean?
+  HenkoKanoDate         DateTime? @mssql.Date
+  HenkoKanoTimed1       Int?
+  HenkoKanoTimed2       Int?
+  HenkoRiyu             String?   @mssql.NVarChar(512)
+  Bin1Date              DateTime? @mssql.Date
+  Bin1Timed1            Int?
+  Bin1Timed2            Int?
+  Bin1IsHagara          Boolean?
+  Bin1HanyuButu         String?   @mssql.NVarChar(64)
+  Bin1InitialPlanDate   DateTime? @mssql.Date
+  Bin2Date              DateTime? @mssql.Date
+  Bin2Timed1            Int?
+  Bin2Timed2            Int?
+  Bin2IsHagara          Boolean?
+  Bin2HenkoRiyu         String?   @mssql.NVarChar(512)
+  Bin2HanyuButu         String?   @mssql.NVarChar(64)
+  Bin2InitialPlanDate   DateTime? @mssql.Date
+  Bin3Date              DateTime? @mssql.Date
+  Bin3Timed1            Int?
+  Bin3Timed2            Int?
+  Bin3IsHagara          Boolean?
+  Bin3HenkoRiyu         String?   @mssql.NVarChar(512)
+  Bin3HanyuButu         String?   @mssql.NVarChar(64)
+  Bin3InitialPlanDate   DateTime? @mssql.Date
+  Bin4Date              DateTime? @mssql.Date
+  Bin4Timed1            Int?
+  Bin4Timed2            Int?
+  Bin4IsHagara          Boolean?
+  Bin4HenkoRiyu         String?   @mssql.NVarChar(512)
+  Bin4HanyuButu         String?   @mssql.NVarChar(64)
+  Bin4InitialPlanDate   DateTime? @mssql.Date
+  Bin5Date              DateTime? @mssql.Date
+  Bin5Timed1            Int?
+  Bin5Timed2            Int?
+  Bin5IsHagara          Boolean?
+  Bin5HenkoRiyu         String?   @mssql.NVarChar(512)
+  Bin5HanyuButu         String?   @mssql.NVarChar(64)
+  Bin5InitialPlanDate   DateTime? @mssql.Date
+  Bin6Date              DateTime? @mssql.Date
+  Bin6Timed1            Int?
+  Bin6Timed2            Int?
+  Bin6IsHagara          Boolean?
+  Bin6HenkoRiyu         String?   @mssql.NVarChar(512)
+  Bin6HanyuButu         String?   @mssql.NVarChar(64)
+  Bin6InitialPlanDate   DateTime? @mssql.Date
+  HanyuSharyoId         Int?
+  JotoBinWreckerId      Int?
+  Biko                  String?   @mssql.NVarChar(1024)
+  AnnaiSasidasiNin      String?   @mssql.NVarChar(1024)
+  AnnaiBiko1            String?   @mssql.NVarChar(1024)
+  AnnaiBiko2            String?   @mssql.NVarChar(1024)
+  HenkoRireki           String?   @mssql.NVarChar(4000)
+  InsertShainId         Int?
+  InsertFormName        String?   @mssql.NVarChar(50)
+  InsertDateTime        DateTime? @mssql.DateTime
+  UpdateShainId         Int?
+  UpdateFormName        String?   @mssql.NVarChar(50)
+  UpdateDateTime        DateTime? @mssql.DateTime
+  LogiBiko              String?   @mssql.NVarChar(512)
+  GembaAnnaiId          Int?
+  SharedLink            String?   @mssql.NVarChar(512)
+  FwSendMailId          Int?
+  ChukeiSendMailId      Int?
+  KojitenSendMailId     Int?
+  GaichuSendMailId      Int?
+  SozaiGaichuSendMailId Int?
+  KantokuSendMailId     Int?
+  SharedLink2           String?   @mssql.NVarChar(512)
+  SharedLink3           String?   @mssql.NVarChar(512)
+  MailSokuho            Boolean?
+  TuikaBin              Boolean?
+  HaisoEnki             Boolean?
+}
+
+model TblShukaKanryoHeader {
+  ShukaKanryoHeaderId Int       @id(map: "PK__TblShuka__E7727CB12A21D67D")
+  ShukaYoteiId        Int?
+  ChukeiId            Int?
+  UnsoId              Int?
+  IsMitei             Boolean?
+  KouzoStatusId1      Int?
+  KouzoUnsoId1        Int?
+  KouzoUnchin1        Decimal?  @mssql.Decimal(7, 0)
+  KouzoStatusId2      Int?
+  KouzoUnsoId2        Int?
+  KouzoUnchin2        Decimal?  @mssql.Decimal(7, 0)
+  HagaraStatusId      Int?
+  HagaraShukaDate     DateTime? @mssql.Date
+  HagaraChukeiDate    DateTime? @mssql.Date
+  HagaraUnsoId        String?   @mssql.NChar(10)
+  HagaraUnchin        Decimal?  @mssql.Decimal(7, 0)
+  IsSeikyu            Boolean?
+  StatusId            Int?
+  InsertShainId       Int?
+  InsertFormName      String?   @mssql.NVarChar(50)
+  InsertDateTime      DateTime? @mssql.DateTime
+  UpdateShainId       Int?
+  UpdateFormName      String?   @mssql.NVarChar(50)
+  UpdateDateTime      DateTime? @mssql.DateTime
+  IDSGohanShukaDate   DateTime? @mssql.Date
+  IDSGohanChukeiDate  DateTime? @mssql.Date
+}
+
+model TblShukaYotei {
+  ShukaYoteiId            Int       @id(map: "PK__TblShuka__E094EC604A5968A3")
+  KoteiDetailId           Int?
+  ChukeiId                Int?
+  UnsoId                  Int?
+  IsHasiraShuka1          Boolean?
+  KouzoStatusId1          Int?
+  KouzoShukaCarId1        Int?
+  KouzoShukaDate1         DateTime? @mssql.Date
+  KouzoChukeiDate1        DateTime? @mssql.Date
+  IsFax                   Boolean?
+  IsTel                   Boolean?
+  IsHasiraShuka           Boolean?
+  IsHasiraShuka2          Boolean?
+  KouzoStatusId2          Int?
+  KouzoShukaCarId2        Int?
+  KouzoShukaDate2         DateTime? @mssql.Date
+  KouzoChukeiDate2        DateTime? @mssql.Date
+  HagaraStatusId          Int?
+  HagaraShukaCarId        Int?
+  HagaraShukaDate         DateTime? @mssql.Date
+  HagaraChukeiDate        DateTime? @mssql.Date
+  SozaiHikitoriYoteiDate  DateTime? @mssql.Date
+  SozaiHikitoriKanryoDate DateTime? @mssql.Date
+  SozaiNohinKojoId        Int?
+  SozaiTumikomiDate       DateTime? @mssql.Date
+  SozaiTumiorosiDate      DateTime? @mssql.Date
+  Biko                    String?   @mssql.NVarChar(100)
+  IsComplete              Boolean?
+  InsertShainId           Int?
+  InsertFormName          String?   @mssql.NVarChar(50)
+  InsertDateTime          DateTime? @mssql.DateTime
+  UpdateShainId           Int?
+  UpdateFormName          String?   @mssql.NVarChar(50)
+  UpdateDateTime          DateTime? @mssql.DateTime
+  KouzoShukaCarId1New     Int?
+  KouzoShukaDate1New      DateTime? @mssql.Date
+  KouzoChukeiDate1New     DateTime? @mssql.Date
+  KouzoShukaCarId2New     Int?
+  KouzoShukaDate2New      DateTime? @mssql.Date
+  KouzoChukeiDate2New     DateTime? @mssql.Date
+  HagaraShukaCarIdNew     Int?
+  HagaraShukaDateNew      DateTime? @mssql.Date
+  HagaraChukeiDateNew     DateTime? @mssql.Date
+  BikoNew                 String?   @mssql.NVarChar(100)
+  KakuninhyoFilePath      String?   @mssql.NVarChar(400)
+  IDSGohanShukaDate       DateTime? @mssql.Date
+  IDSGohanChukeiDate      DateTime? @mssql.Date
+  LogiBiko                String?   @mssql.NVarChar(100)
+  Tokumei                 String?   @mssql.NVarChar(2)
+  KouzoTaiou              String?   @mssql.NVarChar(5)
+  HagaraTaiou             String?   @mssql.NVarChar(5)
+  TroubleBiko             String?   @mssql.NVarChar(20)
+  NobuchiKompoDate        DateTime? @mssql.Date
+  NobuchiKompoYoteiDate   DateTime? @mssql.Date
+  NobuchiDataUketoriDate  DateTime? @mssql.Date
+  NobuchiStatusId         Int?
+  NobuchiShukaDate        DateTime? @mssql.Date
+  NobuchiChukeiDate       DateTime? @mssql.Date
+  NobuchiBiko             String?   @mssql.NVarChar(100)
+}
+
+model TblYotei {
+  YoteiId                    Int       @id(map: "PK__TblYotei__B99A398862457BFB")
+  KoteiDetailId              Int?
+  ZumenUketukeDate           DateTime? @mssql.Date
+  KotoShoninDate             DateTime? @mssql.Date
+  CheckBackDate              DateTime? @mssql.Date
+  ShoninDate                 DateTime? @mssql.Date
+  KakoYoteiDate              DateTime? @mssql.Date
+  ChinaPdfIraiDate           DateTime? @mssql.Date
+  ChinaPdfHenkyakuDate       DateTime? @mssql.Date
+  CadInputId1                Int?
+  CadInputId2                Int?
+  SakuzuIraiDate             DateTime? @mssql.Date
+  SakuzuNohinYoteiDate_      DateTime? @map("SakuzuNohinYoteiDate@") @mssql.Date
+  SakuzuHenkyakuDate         DateTime? @mssql.Date
+  SakuzuSosinDate            DateTime? @mssql.Date
+  MokuzaiRiyou1              DateTime? @mssql.Date
+  MokuzaiRiyouBiko           String?   @mssql.NVarChar(50)
+  ChinaSakuzuTankaOfHajimeId Int?
+  ChinaSakuzuTankaId         Int?
+  ChinaShiharaiInitCheck     Boolean?
+  ChinaShiharaiTanka         Decimal?  @mssql.Decimal(7, 0)
+  ChinaShiharaiGengakuDate   DateTime? @mssql.Date
+  ChinaShiharaiGengakuId     Int?
+  ChinaShiharaiKingaku       Decimal?  @mssql.Decimal(7, 0)
+  ChinaShiharaiDate          DateTime? @mssql.Date
+  ClaimNebiki                Decimal?  @mssql.Decimal(7, 0)
+  IsMokuzaiRiyouPoint        Boolean?
+  IsMokuzaiRiyouPointAdd     Boolean?
+  Biko                       String?   @mssql.NVarChar(50)
+  CadInputId1_2              Int?
+  CadInputId2_2              Int?
+  SakuzuIraiDate_2           DateTime? @mssql.Date
+  SakuzuHenkyakuDate_2       DateTime? @mssql.Date
+  SakuzuSosinDate_2          DateTime? @mssql.Date
+  ChinaSakuzuTankaId_2       Int?
+  ChinaShiharaiInitCheck_2   Boolean?
+  ChinaShiharaiTanka_2       Decimal?  @mssql.Decimal(7, 0)
+  ChinaShiharaiGengakuDate_2 DateTime? @mssql.Date
+  ChinaShiharaiGengakuId_2   Int?
+  ChinaShiharaiKingaku_2     Decimal?  @mssql.Decimal(7, 0)
+  ChinaShiharaiDate_2        DateTime? @mssql.Date
+  InsertShainId              Int?
+  InsertFormName             String?   @mssql.NVarChar(50)
+  InsertDateTime             DateTime? @mssql.DateTime
+  UpdateShainId              Int?
+  UpdateFormName             String?   @mssql.NVarChar(50)
+  UpdateDateTime             DateTime? @mssql.DateTime
+  KanryoKakuninDate          DateTime? @mssql.Date
+  KakoShoninSosinDate        DateTime? @mssql.Date
+  KakoShoninHenkyakuDate     DateTime? @mssql.Date
+  SekeiSyozoku               String?   @mssql.NVarChar(100)
+  SekeiTanto                 String?   @mssql.NVarChar(100)
+  IsKanryo                   Boolean?
+  SakuzuSekkeiJyuryoDate     DateTime? @mssql.Date
+  SyogoIraiSaki              String?   @mssql.NVarChar(100)
+  SyogoIraiDate              DateTime? @mssql.Date
+  SyogoJyuryoDate            DateTime? @mssql.Date
+  KakoShoninJyuryoGaichuSaki String?   @mssql.NVarChar(100)
+  GaichuSakiSofuDate         DateTime? @mssql.Date
+  FinalSyoninSofuYoteiDate   DateTime? @mssql.Date
+  FinalSyoninSofuDate        DateTime? @mssql.Date
+  KanamonoJyuryoDate         DateTime? @mssql.Date
+  KanamonoSekisanSofuDate    DateTime? @mssql.Date
+  IDSCADBiko                 String?   @mssql.NVarChar(100)
+  IsKanryoDate               DateTime? @mssql.Date
+  HagaraGaichuSousinbi       DateTime? @mssql.Date
+  IsSekisanId                Int?
+}
+
+model ViewShukaGembaHanyuPublication {
+  HeaderId	              Int
+  KoteiDetailId	          Int       @unique
+  ShukaGembaHanyuId	      Int?	
+  Nendo                   Decimal?
+  StatusId	              Int?	
+  KoujiNo         	      String?
+  BukenNo	                String?
+  GembaName	              String?
+  Goutou	                String?
+  Tousu	                  Decimal?
+  Kouzo	                  Decimal?	
+  NobeyukaMenseki1	      Decimal?	
+  NobeyukaMenseki2	      Decimal?
+  BukenKbnId	            Int?	
+  ShukaJotoDate   	      DateTime?	
+  TorihikiId	            Int?	
+  TorihikiName	          String?
+  KojitenId	              Int?	
+  KoujitenName	          String?
+  KojitenCdAndName	      String?
+  KojitenMailAddress	    String?
+  KantokuId	              Int?	
+  KantokuName	            String?
+  KantokuTel	            String?
+  KantokuMailAddress	    String?
+  ChukeiId	              Int?	
+  ChukeiName	            String?
+  ChukeiMailAddress	      String?
+  KozoKojoId	            Int?	
+  KozoKojoNameRyaku	      String?
+  KozoKojoMailAddress	    String?
+  KozoKojoIsJisha	        Boolean?
+  KouzoShukaDate 	        DateTime?	
+  KouzoChukeiDate 	      DateTime?	
+  HagaraKojoId	          Int?	
+  HagaraKojoNameRyaku	    String?
+  HagaraKojoMailAddress	  String?
+  HagaraKojoIsJisha	      Boolean?
+  HagaraShukaDate	        DateTime?	
+  HagaraChukeiDate  	    DateTime?	
+  IDSGohanKojoId	        Int?	
+  IDSGohanKojoNameRyaku	  String?
+  IDSGohanKojoMailAddress	String?
+  IDSGohanKojoIsJisha	    Boolean?
+  LVLNobuchiKojoId	      Int?	
+  LVLNobuchiKojoNameRyaku	String?
+  LVLNobuchiKojoMailAddress	String?
+  LVLNobuchiKojoIsJisha	  Boolean?
+  SozaiGaichuId	          Int?	
+  SozaiGaichuNameRyaku	  String?
+  SozaiGaichuMailAddress	String?
+  SozaiTumikomiDate 	    DateTime?	
+  SozaiTumiorosiDate  	  DateTime?	
+  SakuzuIraiDate    	    DateTime?	
+  KakoShoninHenkyakuDate  DateTime?	
+  NomonoName	            String?
+  IsCompleteName	        String?
+  HanyuSharyoId	          Int?	
+  HanyuSharyoName	        String?
+  JotoBinWreckerId	      Int?	
+  JotoBinWreckerName	    String?
+  KozoYotei	              String?
+  IsKakutei	              String?	
+  GembaAnnaiId	          Int?	
+  GembaAnnai	            String?
+  GembaAnnaiCdAndName	    String?
+  SharedLink	            String?
+  SharedLink2	            String?
+  SharedLink3	            String?
+  Biko	                  String?
+  LogiBiko	              String?
+  HenkoRiyu	              String?
+  Bin1IsHagara	          String?
+  Bin1InitialPlanDate	    DateTime?	
+  Bin1HanyuDateDiff	      Int?	
+  Bin1Date	              DateTime?	
+  Bin1Hour	              String?
+  Bin1Minute	            String?
+  Bin1Time	              String?
+  Bin1HanyuButu	          String?
+  Bin2IsHagara	          String?	
+  Bin2InitialPlanDate	    DateTime?	
+  Bin2HanyuDateDiff	      Int?	
+  Bin2Date	              DateTime?	
+  Bin2Hour	              String?
+  Bin2Minute	            String?
+  Bin2Time	              String?
+  Bin2HanyuButu	          String?
+  Bin3IsHagara	          String?	
+  Bin3InitialPlanDate	    DateTime?	
+  Bin3HanyuDateDiff	      Int?	
+  Bin3Date	              DateTime?	
+  Bin3Hour	              String?
+  Bin3Minute	            String?
+  Bin3Time	              String?
+  Bin3HanyuButu	          String?
+  Bin4IsHagara	          String?	
+  Bin4InitialPlanDate	    DateTime?	
+  Bin4HanyuDateDiff	      Int?	
+  Bin4Date	              DateTime?	
+  Bin4Hour	              String?
+  Bin4Minute	            String?
+  Bin4Time	              String?
+  Bin4HanyuButu	          String?
+  Bin5IsHagara	          String?	
+  Bin5InitialPlanDate	    DateTime?	
+  Bin5HanyuDateDiff	      Int?	
+  Bin5Date	              DateTime?	
+  Bin5Hour	              String?
+  Bin5Minute	            String?
+  Bin5Time	              String?
+  Bin5HanyuButu	          String?
+  Bin6IsHagara	          String?	
+  Bin6InitialPlanDate	    DateTime?	
+  Bin6HanyuDateDiff	      Int?	
+  Bin6Date	              DateTime?	
+  Bin6Hour	              String?
+  Bin6Minute	            String?
+  Bin6Time	              String?
+  Bin6HanyuButu	          String?
+  SekouName	              String?
+  HaisoEnki	              Boolean?
+  HaisoEnkiDisp	          String?
+  KoubaiNedaCdName	      String?
+}

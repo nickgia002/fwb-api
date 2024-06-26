@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/generated/mysql"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement()) @map("id")
+  userId       String   @unique @map("user_id") @db.VarChar(50)
+  username     String   @map("user_name") @db.VarChar(128)
+  usernameKana String?  @map("user_name_kana") @db.VarChar(128)
+  mailAddress  String?  @unique @map("mail_address") @db.VarChar(256)
+  tel          String?  @db.VarChar(13)
+  roleDiv      String   @map("role_div") @db.Char(2)
+  password     String   @db.VarChar(255)
+  companyId    Int?     @map("company_id")
+  createdBy    Int?     @map("created_by")
+  updatedBy    Int?     @map("updated_by")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+  company      Company? @relation(fields: [companyId], references: [id])
+  memo         String?  @map("memo")
+
+  @@index([companyId], map: "users_company_id_fkey")
+  @@map("users")
+}
+
+model Company {
+  id              Int              @id @default(autoincrement()) @map("id")
+  companyName     String           @map("company_nm") @db.VarChar(128)
+  companyDiv      String?          @map("company_div") @db.Char(2)
+  companyNameKana String?          @map("company_name_kana") @db.VarChar(128)
+  createdBy       Int?             @map("created_by")
+  updatedBy       Int?             @map("updated_by")
+  createdAt       DateTime         @default(now()) @map("created_at")
+  updatedAt       DateTime         @default(now()) @updatedAt @map("updated_at")
+  companyIndexes  CompanyIndexes[]
+  users           User[]
+  memo         String?  @map("memo")
+
+  @@map("companies")
+}
+
+model CompanyIndexes {
+  id        Int      @id @default(autoincrement()) @map("id")
+  companyId Int      @map("company_id")
+  kojoId    Int      @map("kojo_id")
+  chukeiId  Int      @map("chukei_id")
+  createdBy Int?     @map("created_by")
+  updatedBy Int?     @map("updated_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+  company   Company  @relation(fields: [companyId], references: [id])
+
+  @@index([companyId], map: "company_indexes_company_id_fkey")
+  @@map("company_indexes")
+}
+
+model News {
+  id                   Int      @id @default(autoincrement())
+  title                String   @map("title") @db.VarChar(400)
+  description          String   @map("description") @db.VarChar(2000)
+  publicationStartDate DateTime @map("publication_start_date")
+  publicationEndDate   DateTime @map("publication_end_date")
+  createdBy            Int?     @map("created_by")
+  updatedBy            Int?     @map("updated_by")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @default(now()) @updatedAt @map("updated_at")
+
+  @@map("news")
+}
+
+model DivValues {
+  divCd        String @map("div_cd") @db.VarChar(5)
+  divValue     String @map("div_value") @db.Char(2)
+  divValueName String @map("div_value_nm") @db.VarChar(128)
+
+  @@id([divCd, divValue])
+  @@map("div_values")
+}
+
+model viewSettings {
+  id           Int      @id @default(autoincrement()) @map("id")
+  userId       String   @map("user_id") @db.VarChar(50)
+  viewSettings String?  @map("view_settings") @db.VarChar(1000)
+  viewType     String?  @map("view_type") @db.Char(1)
+
+  @@map("view_settings")
+}
